@@ -1,14 +1,36 @@
-{% extends "base.html" %}
-{% block content %}
-  <div class="jumbotron">
-    <h1>Welcome to newsmash</h1>
-    <p>Time to start building your site!</p>
-    <p><a class="btn btn-primary btn-lg" href="http://luminusweb.net">Learn more &raquo;</a></p>
-  </div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Welcome to NewsMash</title>
+  </head>
+  <body>    <!-- scripts and styles -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    {% style "/css/screen.css" %}
 
-  <div class="row-fluid">
-    <div class="span9">
-    {{content|safe}}
+    <div class="home_content">
+      <img src="img/Logo_Homepage.png"/>
+      <div class="home_content_box">
+        <h3>Explore News from Different Perspectives</h3>
+        <a href="/articles"><p>Browse</p><a>
+      </div>
     </div>
-  </div>
-{% endblock %}
+    
+    <video autoplay loop muted poster="/img/Intro Frame.jpg" id="video-bg">
+      <source src="/img/Intro.webm" type="video/webm">
+        <source src="/img/Intro_1.mp4" type="video/mp4">
+ 
+    </video>
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var context = "{{servlet-context}}";
+    </script>
+    {% block page-scripts %}
+    {% endblock %}
+  </body>
+</html>
+

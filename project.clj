@@ -17,7 +17,13 @@
    [lib-noir "0.9.5"]
    [org.clojure/clojure "1.6.0"]
    [environ "1.0.0"]
-   [ring-server "0.3.1"]]
+   [ring/ring-codec "1.0.0"]
+   [ring-server "0.3.1"]
+   [clj-http "1.0.1"]
+   [cheshire "5.4.0"]
+   [io.curtis/boilerpipe-clj "0.3.0"]
+   [com.github.kyleburton/clj-xpath "1.4.4"]
+   [org.clojars.scsibug/feedparser-clj "0.4.0"]]
   :repl-options
   {:init-ns newsmash.repl}
   :jvm-opts

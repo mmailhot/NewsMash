@@ -1,11 +1,19 @@
 (ns newsmash.layout
   (:require [selmer.parser :as parser]
+            [selmer.filters :as filters]
             [clojure.string :as s]
             [ring.util.response :refer [content-type response]]
             [compojure.response :refer [Renderable]]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [clojure.string :as string]))
 
 (parser/set-resource-path!  (clojure.java.io/resource "templates"))
+
+(filters/add-filter! :pformat
+                     (fn [body]
+                       (->> (string/split body #"\n")
+                            (map #(str "<p>" % "</p>"))
+                            (string/join ""))))
 
 (deftype RenderableTemplate [template params]
   Renderable

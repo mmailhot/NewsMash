@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="article-sidebar inner-sidebar">
+  <div class="article-info">
+    <span class="sidebar-deco">You're reading an article by:</span>
+    <span class="article-publication">{{article.publication}}</span>
+    <span class="original-link">
+    <a href="{{article.url}}">View Original</a>
+    </span>
+    <span class="sidebar-deco">For a different take, try:</span>
+    {% for sarticle in similar %}
+    <a class="similar-link" href="/articles/{{sarticle.id}}">
+      <h4 class="similar-title">{{sarticle.doc.title}}</h4>
+      <span class="similar-pub">{{sarticle.doc.publication}}</span>
+    </a>
+    {% endfor %}
+
+</div>
+</section>
+<section class="article-container inner-container">
+<h1 class="article-title">{{article.title}}</h1>
+ <div class="article-body">
+    {{article.body|pformat|safe}}
+</div>
+</section>
+{% endblock %}
+{% block page-scripts %}
+<script type="text/javascript">
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Articles</h1>
+{% for article in articles %}
+<div class="article_small">
+  <a href="/articles/{{article.id}}"><h3>{{article.doc.title}}</h3></a>
+  <p>{{article.doc.summary}}</p>
+  <p>{{article.doc.publication}}</p>
+</div>
+{% endfor %}
+{% endblock %}
