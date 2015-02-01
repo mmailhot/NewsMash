@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="article-sidebar inner-sidebar">
+  <a id="top"></a>
   <div class="article-info">
     <span class="sidebar-deco">You're reading an article by:</span>
     <span class="article-publication">{{article.publication}}</span>
@@ -21,10 +22,7 @@
 <h1 class="article-title">{{article.title}}</h1>
  <div class="article-body">
     {{article.body|pformat|safe}}
-</div>
+ </div>
+ <a class="article-to-top" href="#top">Back to Top</a>
 </section>
-{% endblock %}
-{% block page-scripts %}
-<script type="text/javascript">
-</script>
 {% endblock %}

@@ -13,7 +13,8 @@
 (defn articles-list []
   (layout/render
    "articles.html"
-   {:articles (db/first-articles 20)}))
+   {:articles (db/first-articles 20)
+    :publications (db/top-publishers)}))
 
 (defroutes articles-routes
   (GET "/articles" [] (articles-list))

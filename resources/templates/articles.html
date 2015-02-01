@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Articles</h1>
+<section class="inner-sidebar">
+  <div class="publisher-info">
+    <span class="sidebar-deco">Our top publications</span>
+    {% for pub in publications %}
+    <span class="pub-name">{{pub.key}}</span>
+    <span class="pub-val">{{pub.value}}</span>
+    {% endfor %}
+  </div>
+</section>
+<section class="articles-container inner-container">
 {% for article in articles %}
 <div class="article_small">
-  <a href="/articles/{{article.id}}"><h3>{{article.doc.title}}</h3></a>
-  <p>{{article.doc.summary}}</p>
-  <p>{{article.doc.publication}}</p>
+  <a class="article_small-title" href="/articles/{{article.id}}"><h3>{{article.doc.title}}</h3></a>
+  <p class="article_small-pub">{{article.doc.publication}}</p>
+  <p class="article-summary">{{article.doc.summary}}</p>
 </div>
 {% endfor %}
+</section>
 {% endblock %}
+

@@ -46,6 +46,17 @@
                        :body)]
     (->> (:rows candidates)
          (filter #(> (first (:order %)) 0.2)))))
+(defn top-publishers []
+  (->> (http/get (str ENDPOINT "_design/_stats/_view/count_publishers_new?reduce=true&group=true")
+                 {:basic-auth [USERNAME PASSWORD]
+                  :as :json})
+       (:body)
+       (:rows)
+       (sort-by :value)
+       (reverse)
+       (take 10)
+       )
+  )
 
 (defn upload-article [article]
   (http/post ENDPOINT

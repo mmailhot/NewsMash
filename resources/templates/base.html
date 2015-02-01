@@ -7,17 +7,15 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="{{servlet-context}}/">newsmash</a>
-        </div>
-        <div class="navbar-collapse collapse ">
-          <ul class="nav navbar-nav">
-            <li class="{{home-selected}}"><a href="{{servlet-context}}/">Home</a></li>
-            <li class="{{about-selected}}"><a href="{{servlet-context}}/about">About</a></li>
-          </ul>
-        </div>
+    <div class="container">
+      <div class="head-l head-links">
+        <a href="/">Home</a>
+      </div>
+      <div class="head-logo">
+        <span class="logo">NM</span>
+      </div>
+      <div class="head-r head-links">
+        <a href="/articles">Browse</a>
       </div>
     </div>
 
@@ -29,7 +27,6 @@
     {% style "/css/screen.css" %}
 
     <script src="//code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="/js/jquery.hc-sticky.min.js"></script>
     <script type="text/javascript">
       var context = "{{servlet-context}}";
     </script>
