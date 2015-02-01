@@ -5,6 +5,22 @@
   <div class="article-info">
     <span class="sidebar-deco">You're reading an article by:</span>
     <span class="article-publication">{{article.publication}}</span>
+    {% if personality %}
+    <span class="trait-header">Pesonality Traits</span>
+    {% for trait in personality.results.main %}
+    <div class="trait">
+      <span class="trait-title">{{trait.name}}</span>
+      <meter value="{{trait.value}}"/>
+    </div>
+    {% endfor %}
+    <span class="trait-header">Values Traits</span>
+    {% for trait in personality.results.values %}
+    <div class="trait">
+      <span class="trait-title">{{trait.name}}</span>
+      <meter value="{{trait.value}}"/>
+    </div>
+    {% endfor %}
+    {% endif %}
     <span class="original-link">
     <a href="{{article.url}}">View Original</a>
     </span>

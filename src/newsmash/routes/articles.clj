@@ -5,10 +5,12 @@
             [newsmash.db :as db]))
 
 (defn show-article [id]
-  (layout/render
-   "article_single.html"
-   {:article (db/get-article id)
-    :similar (db/get-similar id)}))
+  (let [article (db/get-article id)]
+    (layout/render
+     "article_single.html"
+     {:article article
+      :similar (db/get-similar id)
+      :personality (db/lookup-personality (:publication article))})))
 
 (defn articles-list []
   (layout/render

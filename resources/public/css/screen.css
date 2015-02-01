@@ -195,3 +195,35 @@ background-size: cover;
     font-size: 20px;
     line-height: 150%;
 }
+.trait-header{
+    display: block;
+    font-size:16px;
+    color:#666;
+    padding-bottom: 5px;
+
+}
+.trait{
+    margin-bottom:8px;
+}
+.trait-title{
+    display:block;
+    font-size:12px;
+    color:#666;
+
+}
+.trait meter{
+    width:80%;
+    height:4px;
+}
+meter { -webkit-appearance: none; } //Crucial, this will disable the default styling in Webkit browsers
+
+meter::-webkit-meter-bar {
+    background: #FFF;
+    border: 1px solid #CCC;
+}
+
+meter::-webkit-meter-optimum-value {
+    background: #87C7DE;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a1d4e6), color-stop(100%, #6bb4d1));
+    background: -webkit-linear-gradient(top, #a1d4e6 0%, #6bb4d1 100%);
+}

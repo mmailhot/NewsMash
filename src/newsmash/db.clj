@@ -58,6 +58,49 @@
        )
   )
 
+(defn biggest-datasets []
+  (->> (http/get (str ENDPOINT "_design/_stats/_view/_concat_text?reduce=true&group=true")
+                 {:basic-auth [USERNAME PASSWORD]
+                  :as :json})
+       (:body)
+       (:rows)
+       (sort-by #(count (:value %)))
+       (reverse)
+       (take 20)))
+
+(defn insert-personality [site-data]
+  (->> (http/post "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/pub_data/"
+                  {:basic-auth [USERNAME PASSWORD]
+                   :form-params {:_id (:name site-data)
+                                 :results (:results site-data)}
+                   :content-type :json
+                   })
+       ))
+
+(defn lookup-personality [name]
+  (try
+    (->> (http/get (str "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/pub_data/" name)
+                   {:basic-auth [USERNAME PASSWORD]
+                    :as :json})
+         :body)
+    (catch Exception e nil)))
+
+(defn delete-article [id]
+  (let [article (get-article id)]
+    (http/delete (str ENDPOINT "/" id "?rev=" (:_rev article))
+                 {:basic-auth [USERNAME PASSWORD]})))
+
+(defn dedup-db []
+  (let [rows(->> (http/get "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/articles_new/_design/_stats/_view/dedup?reduce=true&group=true"
+                           {:basic-auth [USERNAME PASSWORD]
+                            :as :json})
+                 :body
+                 :rows)]
+    (doseq [row rows]
+      (when (> (count (:value row)) 1)
+        (doseq [id (drop 1 (:value row))]
+          (delete-article id))))))
+
 (defn upload-article [article]
   (http/post ENDPOINT
              {:basic-auth [USERNAME PASSWORD]

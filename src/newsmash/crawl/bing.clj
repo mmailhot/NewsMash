@@ -31,7 +31,7 @@
                     :tags (utils/analyse_text body)})
                   (catch Exception e nil)))))))
 
-(def terms ["Tony Abbot" "Super Bowl" "Palestine" "Syriza" "Putin"])
+(def terms ["Ebola" "ECB" "Sweeden"])
 
 (defn load-all []
   (doseq [term terms
