@@ -32,6 +32,14 @@
             )
        " AND NOT pub:\"" pub "\""))
 
+(defn get-by-tags [tags pub]
+  (let [candidates (->> (http/get (str ENDPOINT "_design/search/_search/search?include_docs=true&limit=10&query="(generate-search-query tags pub))
+                                 {:basic-auth [USERNAME PASSWORD]
+                                  :as :json})
+                        :body)]
+    (->> (:rows candidates)
+         (filter #(> (first (:order %)) 0.2)))))
+
 (defn get-similar [id]
   (let
       [art (->> (http/get (str ENDPOINT "/" id)
@@ -40,12 +48,8 @@
                 :body)
        tags (:tags art)
        pub (:publication art)
-       candidates (->> (http/get (str ENDPOINT "_design/search/_search/search?include_docs=true&limit=10&query="(generate-search-query tags pub))
-                                 {:basic-auth [USERNAME PASSWORD]
-                                  :as :json})
-                       :body)]
-    (->> (:rows candidates)
-         (filter #(> (first (:order %)) 0.2)))))
+       ]
+    (get-by-tags tags pub)))
 
 (defn search [term]
   (->> (http/get (str ENDPOINT "_design/search/_search/search?include_docs=true&limit=15&query=" term)

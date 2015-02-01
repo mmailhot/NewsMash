@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [defroutes]]
             [newsmash.routes.home :refer [home-routes]]
             [newsmash.routes.articles :refer [articles-routes]]
+            [newsmash.routes.api :refer [api-routes]]
             [newsmash.middleware :refer [load-middleware]]
             [newsmash.session-manager :as session-manager]
             [noir.response :refer [redirect]]
@@ -64,7 +65,7 @@
 
 (def app (app-handler
            ;; add your application routes here
-          [articles-routes home-routes base-routes]
+          [articles-routes api-routes home-routes base-routes]
            ;; add custom middleware here
            :middleware (load-middleware)
            :ring-defaults (mk-defaults false)
