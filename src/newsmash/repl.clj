@@ -20,7 +20,7 @@
 (defn start-server
   "used for starting the server in development mode from REPL"
   [& [port]]
-  (let [port (if (env :PORT) (env :PORT) (if (env :VCAP_APP_PORT) (env :VCAP_APP_PORT) 3000))]
+  (let [port 5000]
     (reset! server
             (serve (get-handler)
                    {:port port
