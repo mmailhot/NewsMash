@@ -3,7 +3,8 @@
     [newsmash.handler :refer [app]]
     [ring.middleware.reload :as reload]
     [org.httpkit.server :as http-kit]
-    [taoensso.timbre :as timbre])
+    [taoensso.timbre :as timbre]
+    [environ.core :refer [env]])
   (:gen-class))
 
 ;contains function that can be used to stop http-kit server
