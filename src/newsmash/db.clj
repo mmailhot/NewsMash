@@ -8,7 +8,7 @@
 
 (def USERNAME "b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix")
 
-(def PASSWORD (env :database-pw))
+(def PASSWORD (env :databasepw))
 
 (defn first-articles [count]
   (->> (http/get (str ENDPOINT "_all_docs?include_docs=true&limit=" (* count 50))

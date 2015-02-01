@@ -1,7 +1,8 @@
 (ns newsmash.repl
   (:use newsmash.handler
         ring.server.standalone
-        [ring.middleware file-info file]))
+        [ring.middleware file-info file]
+        environ.core))
 
 (defonce server (atom nil))
 
@@ -19,7 +20,7 @@
 (defn start-server
   "used for starting the server in development mode from REPL"
   [& [port]]
-  (let [port (if port (Integer/parseInt port) 3000)]
+  (let [port (if (env :PORT) (env :PORT) (if (env :VCAP_APP_PORT) (env :VCAP_APP_PORT) 3000))]
     (reset! server
             (serve (get-handler)
                    {:port port
