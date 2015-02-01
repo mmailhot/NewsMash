@@ -14,7 +14,7 @@
 (defn dev? [args] (some #{"-dev"} args))
 
 (defn parse-port [args]
-  (if (env :PORT) (env :PORT) (if (env :VCAP_APP_PORT) (env :VCAP_APP_PORT) 3000)))
+  (if (env :port) (Integer. (env :port)) (if (env :vcap_app_port) (Integer. (env :vcap_app_port)) 3000)))
 
 (defn- start-server [port args]
   (reset! server
