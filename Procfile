@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/newsmash.jar clojure.main -m newsmash.core
+web: lein with-profile production trampoline run -m newsmash.core

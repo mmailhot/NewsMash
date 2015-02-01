@@ -49,8 +49,6 @@
     [(require 'pjstadig.humane-test-output)
      (pjstadig.humane-test-output/activate!)],
     :env {:dev true}}}
-  :uberjar-name
-  "newsmash.jar"
   :main
   newsmash.core
   :min-lein-version "2.0.0")
