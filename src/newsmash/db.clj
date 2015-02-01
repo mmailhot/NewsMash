@@ -46,6 +46,13 @@
                        :body)]
     (->> (:rows candidates)
          (filter #(> (first (:order %)) 0.2)))))
+
+(defn search [term]
+  (->> (http/get (str ENDPOINT "_design/search/_search/search?include_docs=true&limit=15&query=" term)
+                 {:basic-auth [USERNAME PASSWORD]
+                  :as :json})
+       :body
+       :rows))
 (defn top-publishers []
   (->> (http/get (str ENDPOINT "_design/_stats/_view/count_publishers_new?reduce=true&group=true")
                  {:basic-auth [USERNAME PASSWORD]

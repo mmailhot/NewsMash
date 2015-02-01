@@ -222,6 +222,18 @@ meter::-webkit-meter-bar {
     border: 1px solid #CCC;
 }
 
+.search{
+    margin-top:30px;
+}
+
+.search input{
+    width:100%;
+    font-family:"Vollkorn";
+    font-size:22px;
+    padding:8px;
+    border: 1px solid #ddd;
+}
+
 meter::-webkit-meter-optimum-value {
     background: #87C7DE;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a1d4e6), color-stop(100%, #6bb4d1));

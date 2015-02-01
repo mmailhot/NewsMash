@@ -12,6 +12,12 @@
       :similar (db/get-similar id)
       :personality (db/lookup-personality (:publication article))})))
 
+(defn articles-search [q]
+  (layout/render
+   "articles.html"
+   {:articles (db/search q)
+    :publications (db/top-publishers)}))
+
 (defn articles-list []
   (layout/render
    "articles.html"
@@ -20,4 +26,5 @@
 
 (defroutes articles-routes
   (GET "/articles" [] (articles-list))
+  (GET "/articles/search" [q] (articles-search q))
   (GET "/articles/:id" [id] (show-article id)))

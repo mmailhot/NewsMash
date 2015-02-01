@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="inner-sidebar">
+  <div class="search">
+    <form method="GET" action="/articles/search">
+      <input name="q" placeholder="Search.." type="text"/> 
+    </form>
+  </div>
   <div class="publisher-info">
     <span class="sidebar-deco">Our top publications</span>
     {% for pub in publications %}
