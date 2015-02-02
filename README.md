@@ -1,19 +1,11 @@
 # newsmash
 
-FIXME
+A news aggregator based on IBM Watson technology that provides the reader with other articles on the same topic.
 
-## Prerequisites
+Built in 36 hours for UofT Hacks. WARNING: Messy code ahead
 
-You will need [Leiningen][1] 2.0 or above installed.
-
-[1]: https://github.com/technomancy/leiningen
-
-## Running
-
-To start a web server for the application, run:
-
-    lein ring server
+Winner of IBM Analytics Prize and Intel Mashery API Award
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2015 Marc Mailhot
