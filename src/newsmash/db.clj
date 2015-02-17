@@ -2,16 +2,17 @@
   (:require [cheshire.core :as json]
             [clj-http.client :as http]
             [environ.core :refer [env]]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [newsmash.service_creds :refer [CLOUDANT]]))
 
-(def ENDPOINT "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/articles_new/")
+(def ENDPOINT (:url CLOUDANT))
 
-(def USERNAME "b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix")
+(def USERNAME (:un CLOUDANT))
 
-(def PASSWORD (env :databasepw))
+(def PASSWORD (:pw CLOUDANT))
 
 (defn first-articles [count]
-  (->> (http/get (str ENDPOINT "_all_docs?include_docs=true&limit=" (* count 50))
+  (->> (http/get (str ENDPOINT "/articles_new/_all_docs?include_docs=true&limit=" (* count 50))
                 {:basic-auth [USERNAME PASSWORD]
                  :as :json})
       (:body)
@@ -20,7 +21,7 @@
       (take count)))
 
 (defn get-article [id]
-  (->> (http/get (str ENDPOINT "/" id)
+  (->> (http/get (str ENDPOINT "/articles_new/" id)
                  {:basic-auth [USERNAME PASSWORD]
                   :as :json})
        :body))
@@ -33,7 +34,7 @@
        " AND NOT pub:\"" pub "\""))
 
 (defn get-by-tags [tags pub]
-  (let [candidates (->> (http/get (str ENDPOINT "_design/search/_search/search?include_docs=true&limit=10&query="(generate-search-query tags pub))
+  (let [candidates (->> (http/get (str ENDPOINT "/articles_new/_design/search/_search/search?include_docs=true&limit=10&query="(generate-search-query tags pub))
                                  {:basic-auth [USERNAME PASSWORD]
                                   :as :json})
                         :body)]
@@ -42,7 +43,7 @@
 
 (defn get-similar [id]
   (let
-      [art (->> (http/get (str ENDPOINT "/" id)
+      [art (->> (http/get (str ENDPOINT "/arcticles_new/" id)
                        {:basic-auth [USERNAME PASSWORD]
                         :as :json})
                 :body)
@@ -52,13 +53,13 @@
     (get-by-tags tags pub)))
 
 (defn search [term]
-  (->> (http/get (str ENDPOINT "_design/search/_search/search?include_docs=true&limit=15&query=" term)
+  (->> (http/get (str ENDPOINT "/articles_new/_design/search/_search/search?include_docs=true&limit=15&query=" term)
                  {:basic-auth [USERNAME PASSWORD]
                   :as :json})
        :body
        :rows))
 (defn top-publishers []
-  (->> (http/get (str ENDPOINT "_design/_stats/_view/count_publishers_new?reduce=true&group=true")
+  (->> (http/get (str ENDPOINT "/articles_new/_design/_stats/_view/count_publishers_new?reduce=true&group=true")
                  {:basic-auth [USERNAME PASSWORD]
                   :as :json})
        (:body)
@@ -70,7 +71,7 @@
   )
 
 (defn biggest-datasets []
-  (->> (http/get (str ENDPOINT "_design/_stats/_view/_concat_text?reduce=true&group=true")
+  (->> (http/get (str ENDPOINT "/articles_new/_design/_stats/_view/_concat_text?reduce=true&group=true")
                  {:basic-auth [USERNAME PASSWORD]
                   :as :json})
        (:body)
@@ -80,7 +81,7 @@
        (take 20)))
 
 (defn insert-personality [site-data]
-  (->> (http/post "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/pub_data/"
+  (->> (http/post (str ENDPOINT "/pub_data/")
                   {:basic-auth [USERNAME PASSWORD]
                    :form-params {:_id (:name site-data)
                                  :results (:results site-data)}
@@ -90,7 +91,7 @@
 
 (defn lookup-personality [name]
   (try
-    (->> (http/get (str "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/pub_data/" name)
+    (->> (http/get (str ENDPOINT "/pub_data/" name)
                    {:basic-auth [USERNAME PASSWORD]
                     :as :json})
          :body)
@@ -98,11 +99,11 @@
 
 (defn delete-article [id]
   (let [article (get-article id)]
-    (http/delete (str ENDPOINT "/" id "?rev=" (:_rev article))
+    (http/delete (str ENDPOINT "/articles_new/" id "?rev=" (:_rev article))
                  {:basic-auth [USERNAME PASSWORD]})))
 
 (defn dedup-db []
-  (let [rows(->> (http/get "https://b8e1e2e8-97c5-4587-8a15-6adeb2bd1b32-bluemix.cloudant.com/articles_new/_design/_stats/_view/dedup?reduce=true&group=true"
+  (let [rows(->> (http/get (str ENDPOINT "/articles_new/_design/_stats/_view/dedup?reduce=true&group=true")
                            {:basic-auth [USERNAME PASSWORD]
                             :as :json})
                  :body
@@ -113,7 +114,7 @@
           (delete-article id))))))
 
 (defn upload-article [article]
-  (http/post ENDPOINT
+  (http/post (str ENDPOINT "/articles_new/")
              {:basic-auth [USERNAME PASSWORD]
               :form-params article
               :content-type :json}))
