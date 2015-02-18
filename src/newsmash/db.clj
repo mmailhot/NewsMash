@@ -43,7 +43,7 @@
 
 (defn get-similar [id]
   (let
-      [art (->> (http/get (str ENDPOINT "/arcticles_new/" id)
+      [art (->> (http/get (str ENDPOINT "/articles_new/" id)
                        {:basic-auth [USERNAME PASSWORD]
                         :as :json})
                 :body)
